@@ -11,15 +11,6 @@
   overflow-x: auto; /* Allows scrolling if there are many items */
 }
 
-.list-item {
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  min-width: 100px; /* Minimum width to give some space to each item */
-  text-align: center;
-}
-
 .section-two,
 .section-three {
   height: 150px; /* Placeholder height for future content */
