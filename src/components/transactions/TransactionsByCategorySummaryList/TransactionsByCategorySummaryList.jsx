@@ -1,7 +1,5 @@
-// src/pages/TransactionsPage/TransactionsPage.jsx
-
 import { useEffect, useState } from 'react';
-import TransactionsByCategorySummary from '../TransactionsByCategorySummary/TransactionsByCategorySummary';
+import TransactionsByCategorySummary from './TransactionsByCategorySummary/TransactionsByCategorySummary';
 
 function TransactionsByCategorySummaryList() {
   const [categorySummaries, setCategorySummaries] = useState([]);
