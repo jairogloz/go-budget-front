@@ -11,10 +11,25 @@ function AddForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: name === "amount" ? parseFloat(value) : value,
-    });
+    if (name === "amount") {
+      // Allow "-" sign for negative numbers
+      if (value === "-" || value === "") {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [name]: parseFloat(value),
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -42,7 +57,7 @@ function AddForm() {
   };
 
   return (
-    <div className="card">
+    <div className="card" style={{ maxWidth: "400px" }}>
       <div className="card-header">Add Transaction</div>
       <div className="card-body">
         <form onSubmit={handleSubmit}>
@@ -55,6 +70,7 @@ function AddForm() {
               name="amount"
               value={formData.amount}
               onChange={handleChange}
+              min="-99999999"
             />
           </div>
 
