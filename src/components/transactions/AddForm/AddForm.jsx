@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddForm() {
+function AddForm({ refreshTransactions }) {
   const [formData, setFormData] = useState({
     amount: 0,
     account_id: "",
@@ -49,6 +49,9 @@ function AddForm() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      // Call the refreshTransactions function to fetch the latest transactions
+      refreshTransactions();
 
       alert("Transaction added!");
     } catch (error) {
