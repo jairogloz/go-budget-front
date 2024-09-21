@@ -5,9 +5,16 @@ function TransactionsByCategorySummaryList({ categorySummaries }) {
     <div>
       <h2>Category Summaries</h2>
       <section className="horizontal-list">
-        {categorySummaries.map((item, index) => (
-          <TransactionsByCategorySummary key={index} category_summary={item} />
-        ))}
+        {categorySummaries === null ? (
+          <p>No transactions available.</p>
+        ) : (
+          categorySummaries.map((item, index) => (
+            <TransactionsByCategorySummary
+              key={index}
+              category_summary={item}
+            />
+          ))
+        )}
       </section>
     </div>
   );

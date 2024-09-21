@@ -51,7 +51,7 @@ function TransactionsPage() {
         categorySummaries={cateogrySummaries}
       />
       <AddForm refreshTransactions={refreshData} />
-      <TransactionsList transactions={transactions} />
+      <TransactionsList transactions={transactions} refreshData={refreshData} />
     </div>
   );
 }

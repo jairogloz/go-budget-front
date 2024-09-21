@@ -1,6 +1,23 @@
 import "./TransactionsList.css";
 
-function TransactionsList({ transactions }) {
+function TransactionsList({ transactions, refreshData }) {
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/transactions/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      refreshData();
+
+      alert("Transaction deleted!");
+    } catch (error) {
+      alert("Error deleting transaction:", error);
+    }
+  };
+
   return (
     <div className="transactions-list">
       <h2>Transactions</h2>
@@ -17,24 +34,25 @@ function TransactionsList({ transactions }) {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.id}>
-              <td>{transaction.description}</td>
-              <td>{transaction.category_id}</td>
-              <td>{transaction.subcategory_id}</td>
-              <td>{transaction.created_at}</td>
-              <td>{transaction.account_name}</td>
-              <td>{transaction.amount}</td>
-              <td>
-                <button
-                  className="button-delete"
-                  onClick={() => handleDelete(transaction.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+          {transactions &&
+            transactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td>{transaction.description}</td>
+                <td>{transaction.category_id}</td>
+                <td>{transaction.subcategory_id}</td>
+                <td>{transaction.created_at}</td>
+                <td>{transaction.account_name}</td>
+                <td>{transaction.amount}</td>
+                <td>
+                  <button
+                    className="button-delete"
+                    onClick={() => handleDelete(transaction.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
