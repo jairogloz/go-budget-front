@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import config from "../../../config";
 
 function AddForm({ refreshTransactions }) {
   const [formData, setFormData] = useState({
@@ -37,7 +38,7 @@ function AddForm({ refreshTransactions }) {
     console.log("Form data:", formData);
 
     try {
-      const response = await fetch("http://localhost:8080/transactions", {
+      const response = await fetch(`${config.backendURL}/transactions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

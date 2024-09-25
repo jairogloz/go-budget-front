@@ -1,12 +1,14 @@
+import config from "../../../config";
 import "./TransactionsList.css";
 
 function TransactionsList({ transactions, refreshData }) {
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/transactions/${id}`, {
+      const response = await fetch(`${config.backendURL}/transactions/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
+        console.log(response);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
