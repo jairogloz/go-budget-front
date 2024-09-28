@@ -2,6 +2,55 @@
 
 This is a front-end application for the go-budget backend, built with vite + react.
 
+## Steps to deploy (manually)
+
+1. Create production build
+
+```bash
+npm run build
+```
+
+Build will be geneated in `/dist` folder.
+
+2. Upload to s3
+
+- You must have an s3 bucket already created
+- Name of the bucket must be your domain name (not yet sure why).
+- Upload the contents of the `/dist` folder to you bucket (not the folder iself, only the contents).
+
+3. Modify the poermissions on the bucket
+
+- Go to Permissions
+- Disable **Block all public access**
+
+4. Edit the bucket policy
+
+- Replace your domain name.
+- Paste the policy in `/extras/bucket.policy.json`
+
+5. Modify bucket properties
+
+- Go to the **Properties** tab.
+- Enable **Static website hosting**
+- Select "Host a static website"
+- Input the name of your index file, in this case `index.html`
+
+Reference [here](https://www.youtube.com/watch?v=_zshr7fswRQ)
+
+## Run with Docker
+
+Build your image with:
+
+```bash
+docker build -t yourusername/image-name .
+```
+
+Then run your container with:
+
+```bash
+docker run -d -p 80:80 yourusername/yourreactapp
+```
+
 ## Getting Started
 
 ### Prerequisites
