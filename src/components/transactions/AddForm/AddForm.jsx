@@ -89,8 +89,12 @@ function AddForm({ refreshTransactions }) {
               required
             >
               <option value="">-- Select an account --</option>
-              <option value="66de01437f356f430e5047e9">Account 1</option>
-              <option value="66de016571aa0dd6668cd69c">Account 2</option>
+              <option value="66f9a19143e5eece5b710f75">BBVA Credit</option>
+              <option value="66f9a19143e5eece5b710f76">BBVA Main</option>
+              <option value="66f9a19143e5eece5b710f77">BBVA Cuenta</option>
+              <option value="66f9a19143e5eece5b710f78">BBVA Ahorro10</option>
+              <option value="66f9a24443e5eece5b710f7a">Cash MXN</option>
+              <option value="66f9a2b243e5eece5b710f7c">Cash USD</option>
             </select>
           </div>
 
