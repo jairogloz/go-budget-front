@@ -1,10 +1,18 @@
 import config from "../../../config";
 import "./TransactionsList.css";
+import { useSession } from "../../../context/SessionContext";
 
 function TransactionsList({ transactions, refreshData }) {
+  const sessionCtx = useSession();
+  const accessToken = sessionCtx.session?.access_token;
+
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`${config.backendURL}/transactions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
         method: "DELETE",
       });
       if (!response.ok) {

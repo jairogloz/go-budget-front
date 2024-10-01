@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import config from "../../../config";
+import { useSession } from "../../../context/SessionContext";
 
 function AddForm({ refreshTransactions }) {
   const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ function AddForm({ refreshTransactions }) {
     subcategory_id: "",
     description: "",
   });
+
+  const sessionCtx = useSession();
+  const accessToken = sessionCtx.session?.access_token;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +45,7 @@ function AddForm({ refreshTransactions }) {
       const response = await fetch(`${config.backendURL}/transactions`, {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
@@ -56,6 +61,7 @@ function AddForm({ refreshTransactions }) {
 
       alert("Transaction added!");
     } catch (error) {
+      console.log(error);
       alert("Error adding transaction:", error);
     }
   };
