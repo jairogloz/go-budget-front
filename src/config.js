@@ -13,6 +13,8 @@ const getEnvVar = (key, defaultValue = undefined) => {
 
 const config = {
   backendURL: getEnvVar("VITE_GO_BUDGET_BACKEND_URL"),
+  supabaseURL: getEnvVar("VITE_SUPABASE_URL"),
+  supabaseAnonKey: getEnvVar("VITE_SUPABASE_ANON_KEY"),
 };
 
 export default config;
