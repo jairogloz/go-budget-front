@@ -12,18 +12,28 @@ function App() {
   };
   const logout = () => {
     supabase.auth.signOut();
+    setUser(null);
   };
+
+  // Use effect to handle authentication changes
   useEffect(() => {
+    // Check if there is an active session when the app loads
+    const getSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data?.session) {
+        setUser(data.session.user);
+      }
+    };
+
+    getSession();
+
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         console.log("Auth event:", event);
         if (event === "SIGNED_IN") {
-          console.log("Session: ", session);
-          console.log("User info:", session?.user);
           setUser(session?.user);
         }
         if (event === "SIGNED_OUT") {
-          console.log("User signed out");
           setUser(null);
         }
       }
