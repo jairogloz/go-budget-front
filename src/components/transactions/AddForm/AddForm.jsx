@@ -3,6 +3,15 @@ import config from "../../../config";
 import { useSession } from "../../../context/SessionContext";
 
 function AddForm({ refreshTransactions }) {
+  const [date, setDate] = useState("");
+  const dateChange = (e) => {
+    setDate(e.target.value);
+  };
+
+  const [time, setTime] = useState("");
+  const timeChange = (e) => {
+    setTime(e.target.value);
+  };
   const [formData, setFormData] = useState({
     amount: 0,
     account_id: "",
@@ -37,9 +46,28 @@ function AddForm({ refreshTransactions }) {
     }
   };
 
+  const formatDateTime = (dateStr, timeStr) => {
+    // Combine the date and time strings
+    const dateTimeStr = `${dateStr}T${timeStr}:00`;
+
+    // Create a new Date object using the combined string
+    const dateObj = new Date(dateTimeStr);
+
+    // Convert it to UTC format and return the ISO string (which includes the Z for UTC)
+    return dateObj.toISOString();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form data:", formData);
+    const formattedDateTime = formatDateTime(date, time);
+
+    // Add the created_at field to formData
+    const updatedFormData = {
+      ...formData,
+      created_at: formattedDateTime,
+    };
+
+    console.log("Form data:", updatedFormData);
 
     try {
       const response = await fetch(`${config.backendURL}/transactions`, {
@@ -48,7 +76,7 @@ function AddForm({ refreshTransactions }) {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
 
       console.log("Response:", response);
@@ -148,6 +176,18 @@ function AddForm({ refreshTransactions }) {
               onChange={handleChange}
               required
             />
+          </div>
+
+          {/* Date */}
+          <div className="form-group">
+            <label>Date:</label>
+            <input type="date" name="date" value={date} onChange={dateChange} />
+          </div>
+
+          {/* Time */}
+          <div className="form-group">
+            <label>Time:</label>
+            <input type="time" name="time" value={time} onChange={timeChange} />
           </div>
 
           <button type="submit">Add</button>
